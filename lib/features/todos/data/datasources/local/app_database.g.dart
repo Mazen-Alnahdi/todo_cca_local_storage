@@ -176,6 +176,13 @@ class _$TodoDao extends TodoDao {
   }
 
   @override
+  Future<void> toggleTodoCompleted(String id) async {
+    await _queryAdapter.queryNoReturn(
+        'UPDATE todos SET isCompleted = CASE WHEN isCompleted = 1 THEN 0 ELSE 1 END WHERE id = ?1',
+        arguments: [id]);
+  }
+
+  @override
   Future<void> insertTodo(TodoModel todo) async {
     await _todoModelInsertionAdapter.insert(todo, OnConflictStrategy.abort);
   }

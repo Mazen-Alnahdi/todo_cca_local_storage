@@ -18,4 +18,9 @@ abstract class TodoDao {
 
   @Query('SELECT * FROM todos WHERE isCompleted = 0')
   Future<List<TodoModel>> getUncompletedTodos();
+
+  @Query(
+    'UPDATE todos SET isCompleted = CASE WHEN isCompleted = 1 THEN 0 ELSE 1 END WHERE id = :id',
+  )
+  Future<void> toggleTodoCompleted(String id);
 }

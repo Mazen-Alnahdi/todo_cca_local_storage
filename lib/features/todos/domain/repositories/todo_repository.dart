@@ -10,4 +10,6 @@ abstract class TodoRepository {
   Future<List<TodoEntity>> getCompletedTodos();
 
   Future<List<TodoEntity>> getUncompletedTodos();
+
+  Future<void> toggleTodoCompleted(String id);
 }

@@ -33,4 +33,9 @@ class TodoRepositoryImplementation implements TodoRepository {
   Future<List<TodoEntity>> getUncompletedTodos() {
     return _appDatabase.todoDao.getUncompletedTodos();
   }
+
+  @override
+  Future<void> toggleTodoCompleted(String id) {
+    return _appDatabase.todoDao.toggleTodoCompleted(id);
+  }
 }

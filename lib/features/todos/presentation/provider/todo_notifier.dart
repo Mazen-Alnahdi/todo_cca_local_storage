@@ -1,13 +1,13 @@
-// todo_notifier.dart
 import 'package:flutter/material.dart';
 import 'package:todo_cca_local/features/todos/domain/usecases/get_completed_todos.dart';
 import 'package:todo_cca_local/features/todos/domain/usecases/get_uncompleted_todos.dart';
 import 'package:todo_cca_local/features/todos/domain/usecases/remove_todo.dart';
 import 'package:todo_cca_local/features/todos/domain/usecases/retrieve_todos.dart';
 import 'package:todo_cca_local/features/todos/domain/usecases/save_todo.dart';
+import 'package:todo_cca_local/features/todos/domain/usecases/toggle_todo_completed.dart';
 
 import '../../domain/entities/todo_entity.dart';
-import 'todo_state.dart'; // Import the new state class
+import 'todo_state.dart';
 
 class TodoNotifier extends ChangeNotifier {
   final GetCompletedTodosUseCase getCompletedTodosUseCase;
@@ -15,6 +15,7 @@ class TodoNotifier extends ChangeNotifier {
   final SaveTodoUseCase saveTodoUseCase;
   final RemoveTodoUseCase removeTodoUseCase;
   final RetrieveTodosUseCase retrieveTodosUseCase;
+  final ToggleTodoCompletedUseCase todoCompletedUseCase;
 
   TodoNotifier({
     required this.getCompletedTodosUseCase,
@@ -22,6 +23,7 @@ class TodoNotifier extends ChangeNotifier {
     required this.saveTodoUseCase,
     required this.removeTodoUseCase,
     required this.retrieveTodosUseCase,
+    required this.todoCompletedUseCase,
   });
 
   TodoState _state = const TodoState();
@@ -146,6 +148,30 @@ class TodoNotifier extends ChangeNotifier {
         state.copyWith(
           status: Status.success,
           successMessage: "Successfully Removed",
+        ),
+      );
+    } catch (e) {
+      _setState(
+        state.copyWith(status: Status.error, errorMessage: e.toString()),
+      );
+    }
+    _setState(state.copyWith(status: Status.idle));
+  }
+
+  Future<void> toggleTodoCompleted(String id) async {
+    _setState(
+      state.copyWith(
+        status: Status.updating,
+        errorMessage: '',
+        successMessage: '',
+      ),
+    );
+    try {
+      await todoCompletedUseCase(params: id);
+      _setState(
+        state.copyWith(
+          status: Status.success,
+          successMessage: "Successfully Updated",
         ),
       );
     } catch (e) {

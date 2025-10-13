@@ -9,9 +9,11 @@ import 'package:todo_cca_local/features/todos/domain/usecases/retrieve_todos.dar
 import 'package:todo_cca_local/features/todos/domain/usecases/save_todo.dart';
 import 'package:todo_cca_local/features/todos/presentation/provider/todo_notifier.dart';
 
+import 'features/todos/domain/usecases/toggle_todo_completed.dart';
+
 final GetIt sl = GetIt.instance;
 
-void setUpDependencies() {
+Future<void> setUpDependencies() async {
   //DataSource
   sl.registerSingletonAsync<AppDatabase>(
     () => $FloorAppDatabase.databaseBuilder('app_database.db').build(),
@@ -44,6 +46,9 @@ void setUpDependencies() {
   sl.registerLazySingleton<SaveTodoUseCase>(
     () => SaveTodoUseCase(todoRepository: sl()),
   );
+  sl.registerLazySingleton<ToggleTodoCompletedUseCase>(
+    () => ToggleTodoCompletedUseCase(todoRepository: sl()),
+  );
 
   //Provider
   sl.registerFactory(
@@ -53,6 +58,9 @@ void setUpDependencies() {
       saveTodoUseCase: sl(),
       removeTodoUseCase: sl(),
       retrieveTodosUseCase: sl(),
+      todoCompletedUseCase: sl(),
     ),
   );
+
+  await sl.allReady();
 }
