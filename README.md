@@ -57,47 +57,16 @@ This project is a simple and efficient Todo application built with Flutter. It d
 
 ## Screenshots
 
-The repository includes a `screenshot/` folder with the following images (I used `.png` extensions; if your images use another extension like `.jpg`, update the filenames accordingly):
-
-- screenshot/addtodo.png
-- screenshot/allnotes.png
-- screenshot/compltedlist.png
-- screenshot/homepage.png
-- screenshot/notcompeted.png
-- screenshot/notes.png
-
-### App Screenshots
-
-![Home screen](screenshot/HomePage_screenshot.png)
-*Home / Todo list view*
-
-![All Notes](screenshot/AllNotes_screenshot.png)
-*Overview of all notes*
-
-![Completed List](screenshot/CompletedList_screenshot.png)
-*Completed todos list*
-
-![Not Completed](screenshot/NotCompletedList_screenshot.png)
-*Pending / not completed todos*
-
-![Add Todo](screenshot/AddTodo_screenshot.png)
-*Add new todo screen*
-
-![Notes](screenshot/Notes_screenshot.png)
-*Notes screen / details*
-
-If you prefer a compact gallery, use the HTML snippet below (keeps images side-by-side on GitHub):
 
 <div align="center">
-  <img src="screenshot//HomePage_screenshot.png" alt="Home screen" width="220" style="margin: 6px;">
-  <img src="screenshot/AllNotes_screenshot.png" alt="All notes" width="220" style="margin: 6px;">
-  <img src="screenshot/CompletedList_screenshot.png" alt="Completed list" width="220" style="margin: 6px;">
-  <img src="screenshot/NotCompletedList_screenshot" alt="Not completed" width="220" style="margin: 6px;">
-  <img src="screenshot/AddTodo_screenshot.png" alt="Add todo" width="220" style="margin: 6px;">
-  <img src="screenshot/Notes_screenshot.png" alt="Notes" width="220" style="margin: 6px;">
+  <img src="screenshots/HomePage_screenshot.png" alt="Home screen" width="220" style="margin: 6px;">
+  <img src="screenshots/AllNotes_screenshot.png" alt="All notes" width="220" style="margin: 6px;">
+  <img src="screenshots/CompletedList_screenshot.png" alt="Completed list" width="220" style="margin: 6px;">
+  <img src="screenshots/NotCompletedList_screenshot.png" alt="Not completed" width="220" style="margin: 6px;">
+  <img src="screenshots/AddTodo_screenshot.png" alt="Add todo" width="220" style="margin: 6px;">
+  <img src="screenshots/Notes_screenshot.png" alt="Notes" width="220" style="margin: 6px;">
 </div>
 
-> Note: Ensure the `screenshot/` folder is at the repository root and the images are committed. If your images use a different extension (for example `.jpg`) or the folder name differs (for example `screenshots/`), update the paths above.
 
 ## Contributing
 
