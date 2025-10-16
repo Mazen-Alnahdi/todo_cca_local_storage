@@ -1,5 +1,5 @@
-import 'package:todo_cca_local/core/usecase/usecase.dart';
-import 'package:todo_cca_local/features/todos/domain/repositories/todo_repository.dart';
+import '../../../../core/usecase/usecase.dart';
+import '../repositories/todo_repository.dart';
 
 class ToggleTodoCompletedUseCase implements UseCase<void, String> {
   final TodoRepository _todoRepository;
@@ -8,7 +8,7 @@ class ToggleTodoCompletedUseCase implements UseCase<void, String> {
     : _todoRepository = todoRepository;
 
   @override
-  Future<void> call({String? params}) {
-    return _todoRepository.toggleTodoCompleted(params!);
+  Future<void> call({required String params}) {
+    return _todoRepository.toggleTodoCompleted(params);
   }
 }

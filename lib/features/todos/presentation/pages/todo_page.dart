@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_cca_local/features/todos/domain/entities/todo_entity.dart';
 
-import '../../domain/entities/todo_entity.dart';
 import '../provider/todo_notifier.dart';
 import '../provider/todo_state.dart';
 
 class TodoPage extends StatefulWidget {
-  const TodoPage({Key? key}) : super(key: key);
+  const TodoPage({super.key});
 
   @override
   State<TodoPage> createState() => _TodoPageState();
@@ -20,12 +20,14 @@ class _TodoPageState extends State<TodoPage> {
   @override
   void initState() {
     super.initState();
+    // Fetches the initial list of todos after the first frame is rendered.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final notifier = Provider.of<TodoNotifier>(context, listen: false);
       notifier.retrieveTodos();
     });
   }
 
+  // Applies the selected filter and fetches the corresponding todos.
   void _filterTodos(TodoFilter filter, TodoNotifier notifier) {
     setState(() {
       _filter = filter;
@@ -43,6 +45,7 @@ class _TodoPageState extends State<TodoPage> {
     }
   }
 
+  // Shows a dialog for adding a new todo item.
   Future<void> _showAddTodoDialog(TodoNotifier notifier) async {
     final titleController = TextEditingController();
     final bodyController = TextEditingController();
@@ -75,19 +78,19 @@ class _TodoPageState extends State<TodoPage> {
               onPressed: isSaving
                   ? null
                   : () async {
+                      if (titleController.text.trim().isEmpty) return;
                       setStateDialog(() => isSaving = true);
                       final newTodo = TodoEntity(
-                        id: DateTime.now().millisecondsSinceEpoch.toString(),
+                        // Using a simple unique ID for this example.
+                        id: DateTime.now().toIso8601String(),
                         title: titleController.text.trim(),
                         body: bodyController.text.trim(),
                         isCompleted: false,
                       );
                       await notifier.saveTodo(newTodo);
-                      _filterTodos(
-                        _filter,
-                        notifier,
-                      ); // Refresh with current filter
-                      Navigator.of(context).pop();
+                      if (mounted) {
+                        Navigator.of(context).pop();
+                      }
                     },
               child: isSaving
                   ? const SizedBox(
@@ -135,10 +138,7 @@ class _TodoPageState extends State<TodoPage> {
           ),
           body: Builder(
             builder: (context) {
-              if (state.status == Status.fetching ||
-                  state.status == Status.adding ||
-                  state.status == Status.deleting ||
-                  state.status == Status.updating) {
+              if (state.status == Status.fetching) {
                 return const Center(child: CircularProgressIndicator());
               }
               if (state.errorMessage.isNotEmpty) {
@@ -165,17 +165,11 @@ class _TodoPageState extends State<TodoPage> {
                     subtitle: Text(todo.body),
                     trailing: IconButton(
                       icon: const Icon(Icons.delete),
-                      onPressed: () async {
-                        await notifier.removeTodo(todo);
-                        _filterTodos(_filter, notifier);
-                      },
+                      onPressed: () => notifier.removeTodo(todo),
                     ),
                     leading: Checkbox(
                       value: todo.isCompleted,
-                      onChanged: (_) async {
-                        await notifier.toggleTodoCompleted(todo.id);
-                        _filterTodos(_filter, notifier);
-                      },
+                      onChanged: (_) => notifier.toggleTodoCompleted(todo.id),
                     ),
                   );
                 },

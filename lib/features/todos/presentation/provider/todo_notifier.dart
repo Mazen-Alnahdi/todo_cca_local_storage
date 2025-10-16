@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_cca_local/core/usecase/usecase.dart';
 import 'package:todo_cca_local/features/todos/domain/usecases/get_completed_todos.dart';
 import 'package:todo_cca_local/features/todos/domain/usecases/get_uncompleted_todos.dart';
 import 'package:todo_cca_local/features/todos/domain/usecases/remove_todo.dart';
@@ -44,7 +45,7 @@ class TodoNotifier extends ChangeNotifier {
       ),
     );
     try {
-      final todos = await retrieveTodosUseCase();
+      final todos = await retrieveTodosUseCase(params: NoParams());
       _setState(
         state.copyWith(
           status: Status.success,
@@ -69,7 +70,7 @@ class TodoNotifier extends ChangeNotifier {
       ),
     );
     try {
-      final todos = await getCompletedTodosUseCase();
+      final todos = await getCompletedTodosUseCase(params: NoParams());
       _setState(
         state.copyWith(
           status: Status.success,
@@ -94,7 +95,7 @@ class TodoNotifier extends ChangeNotifier {
       ),
     );
     try {
-      final todos = await getUncompletedTodosUseCase();
+      final todos = await getUncompletedTodosUseCase(params: NoParams());
       _setState(
         state.copyWith(
           status: Status.success,
@@ -126,6 +127,8 @@ class TodoNotifier extends ChangeNotifier {
           successMessage: "Successfully Saved",
         ),
       );
+      // Refresh the list to show the new todo.
+      await retrieveTodos();
     } catch (e) {
       _setState(
         state.copyWith(status: Status.error, errorMessage: e.toString()),
@@ -150,6 +153,8 @@ class TodoNotifier extends ChangeNotifier {
           successMessage: "Successfully Removed",
         ),
       );
+      // Refresh the list to reflect the deletion.
+      await retrieveTodos();
     } catch (e) {
       _setState(
         state.copyWith(status: Status.error, errorMessage: e.toString()),
@@ -174,6 +179,8 @@ class TodoNotifier extends ChangeNotifier {
           successMessage: "Successfully Updated",
         ),
       );
+      // Refresh the list to show the updated status.
+      await retrieveTodos();
     } catch (e) {
       _setState(
         state.copyWith(status: Status.error, errorMessage: e.toString()),

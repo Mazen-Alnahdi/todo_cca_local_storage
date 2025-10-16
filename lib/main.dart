@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
         title: 'Todo App',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
         ),
         home: const TodoPage(),
       ),

@@ -1,14 +1,15 @@
-import 'package:todo_cca_local/features/todos/domain/repositories/todo_repository.dart';
-
+import '../../../../core/usecase/usecase.dart';
 import '../entities/todo_entity.dart';
+import '../repositories/todo_repository.dart';
 
-class RemoveTodoUseCase {
+class RemoveTodoUseCase implements UseCase<void, TodoEntity> {
   final TodoRepository _todoRepository;
 
   RemoveTodoUseCase({required TodoRepository todoRepository})
     : _todoRepository = todoRepository;
 
-  Future<void> call({TodoEntity? params}) {
-    return _todoRepository.removeTodo(params!);
+  @override
+  Future<void> call({required TodoEntity params}) {
+    return _todoRepository.removeTodo(params);
   }
 }

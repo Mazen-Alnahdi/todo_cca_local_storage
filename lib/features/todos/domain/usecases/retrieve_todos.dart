@@ -1,15 +1,15 @@
-import 'package:todo_cca_local/core/usecase/usecase.dart';
-import 'package:todo_cca_local/features/todos/domain/entities/todo_entity.dart';
-import 'package:todo_cca_local/features/todos/domain/repositories/todo_repository.dart';
+import '../../../../core/usecase/usecase.dart';
+import '../entities/todo_entity.dart';
+import '../repositories/todo_repository.dart';
 
-class RetrieveTodosUseCase implements UseCase<List<TodoEntity>, void> {
+class RetrieveTodosUseCase implements UseCase<List<TodoEntity>, NoParams> {
   final TodoRepository _todoRepository;
 
   RetrieveTodosUseCase({required TodoRepository todoRepository})
     : _todoRepository = todoRepository;
 
   @override
-  Future<List<TodoEntity>> call({void params}) {
+  Future<List<TodoEntity>> call({required NoParams params}) {
     return _todoRepository.retrieveTodos();
   }
 }
